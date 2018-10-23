@@ -28,11 +28,9 @@ coef_list_2_l = []
 
 for alpha in alpha_array:
     
-    clf = ElasticNet(alpha=alpha, l1_ratio=0.5, tol=1e-6, max_iter=3000, 
-                     warm_start=False, random_state=1, fit_intercept=False)
+    clf = ElasticNet(alpha=alpha, l1_ratio=0.5, tol=1e-6, max_iter=3000, fit_intercept=False)
     
-    clf_m = MultiTaskElasticNet(alpha=alpha, l1_ratio=0.5, tol=1e-6, max_iter=3000, 
-                                warm_start=False, random_state=1, fit_intercept=False)
+    clf_m = MultiTaskElasticNet(alpha=alpha, l1_ratio=0.5, tol=1e-6, max_iter=3000, fit_intercept=False)
     # get fitted
     clf_m.fit(A, B)
     clf.fit(A, B)
@@ -72,8 +70,8 @@ plt.close()
 # case 2: run enet_path to do the same thing
 
 alphas_enet, coefs_enet, _ = enet_path(A, B, max_iter=3000, tol=1e-6, 
-                                       alphas=np.logspace(-16,1,200),precompute=False,
-                                       l1_ratio=0.5, random_state=1, fit_intercept=False)
+                                       alphas=np.logspace(-16,1,200),
+                                       l1_ratio=0.5, fit_intercept=False)
 
 plt.figure()
 plt.plot(np.log10(alpha_array), coefs_enet[0,:,:].T)
