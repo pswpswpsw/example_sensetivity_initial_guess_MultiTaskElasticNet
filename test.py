@@ -76,13 +76,13 @@ alphas_enet, coefs_enet, _ = enet_path(A, B, max_iter=3000, tol=1e-6,
                                        l1_ratio=0.5, random_state=1, fit_intercept=False)
 
 plt.figure()
-plt.plot(-np.log10(alpha_array), coefs_enet[0,:,:].T)
+plt.plot(np.log10(alpha_array), coefs_enet[0,:,:].T)
 plt.xlabel('-log10(alpha)')
 plt.savefig('enet_path_coef_1.png')
 plt.close()
 
 plt.figure()
-plt.plot(-np.log10(alpha_array), coefs_enet[1,:,:].T)
+plt.plot(np.log10(alpha_array), coefs_enet[1,:,:].T)
 plt.xlabel('-log10(alpha)')
 plt.savefig('enet_path_coef_2.png')
 plt.close()
