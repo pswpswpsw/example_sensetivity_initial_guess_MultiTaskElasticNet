@@ -2,7 +2,7 @@
 
 ## Motivations
 - For a task of drawing a **ElasticNet path for a multi path-output linear regression problem** that is supposed to suit well with `MultiTaskElasticNet`, we found that the *path* from **`sklearn.linear_model.MultiTaskElasticNet`** in Sklearn is not consistent with that from **`sklearn.linear_model.enet_path`**
-- In addition, we found something weird, if we feed the **$\alpha$** in the ElastNet one by one versus feed a whole array of **$\alpha$**, the **sklearn.linear_model.enet_path** gives different results  
+- In addition, we found something weird, if we feed the **alpha** in the ElastNet one by one versus feed a whole array of **alpha**, the **sklearn.linear_model.enet_path** gives different results  
 - A first glance of the [source code](https://github.com/scikit-learn/scikit-learn/blob/7389dba/sklearn/linear_model/coordinate_descent.py#L1629) clearly shows that both `MultiTaskElasticNet` and `enet_path` are calling the same **`Cython`** function for doing the heavy lifting in ElasticNet in the [cd_fast](https://github.com/scikit-learn/scikit-learn/blob/7389dbac82d362f296dc2746f10e43ffa1615660/sklearn/linear_model/cd_fast.pyx) source code. 
 - Even if we use the same arguments in the interface of both `MultiTaskElasticNet` and `enet_path`, the results are different, **which is not acceptable!** 
 
