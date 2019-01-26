@@ -15,9 +15,16 @@ print B.shape
 print A.mean(axis=0)
 print B.mean(axis=0)
 
+num_alpha = 100
+tol = 1e-8
+l1_ratio = 0.5
+max_iter = 3000
+
+disable_single_enet = True
 
 # case 1: performing enet path by calling ElasticNet individually
-alpha_array = np.logspace(-16,1,200)
+alpha_array = np.logspace(-16,1,num_alpha)
+alpha_array = alpha_array[::-1]
 coef_list_1 = []
 coef_list_2 = []
 coef_list_1_m = [] 
@@ -26,32 +33,43 @@ coef_list_1_l = []
 coef_list_2_l = []
 
 
-for alpha in alpha_array:
-    
-    clf = ElasticNet(alpha=alpha, l1_ratio=0.5, tol=1e-6, max_iter=3000, fit_intercept=False)
-    
-    clf_m = MultiTaskElasticNet(alpha=alpha, l1_ratio=0.5, tol=1e-6, max_iter=3000, fit_intercept=False)
-    # get fitted
-    clf_m.fit(A, B)
-    clf.fit(A, B)
-    
-    coef_list_1.append(clf.coef_[0])
-    coef_list_2.append(clf.coef_[1])
-    coef_list_1_m.append(clf_m.coef_[0])
-    coef_list_2_m.append(clf_m.coef_[1])
+for index, alpha in enumerate(alpha_array):
 
-# enet
-plt.figure()
-plt.plot(-np.log10(alpha_array), coef_list_1)
-plt.xlabel('-log10(alpha)')
-plt.savefig('single_run_enet_coef_1.png')
-plt.close()
+    print alpha
 
-plt.figure()
-plt.plot(-np.log10(alpha_array), coef_list_2)
-plt.xlabel('-log10(alpha)')
-plt.savefig('single_run_enet_coef_2.png')
-plt.close()
+
+    if not disable_single_enet:
+        clf = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, tol=tol, max_iter=max_iter, fit_intercept=False)
+        clf.fit(A, B)
+        coef_list_1.append(clf.coef_[0])
+        coef_list_2.append(clf.coef_[1])
+
+    if index == 0:
+        clf_m = MultiTaskElasticNet(alpha=alpha, l1_ratio=l1_ratio, tol=tol, max_iter=max_iter, fit_intercept=False)
+        clf_m.fit(A, B)
+    else:
+        clf_m.warm_start = True
+        clf_m.alpha = alpha
+        clf_m.fit(A, B)
+
+    coef_copy = np.copy(clf_m.coef_)
+
+    coef_list_1_m.append(coef_copy[0])
+    coef_list_2_m.append(coef_copy[1])
+
+if not disable_single_enet:
+    # enet
+    plt.figure()
+    plt.plot(-np.log10(alpha_array), coef_list_1)
+    plt.xlabel('-log10(alpha)')
+    plt.savefig('single_run_enet_coef_1.png')
+    plt.close()
+
+    plt.figure()
+    plt.plot(-np.log10(alpha_array), coef_list_2)
+    plt.xlabel('-log10(alpha)')
+    plt.savefig('single_run_enet_coef_2.png')
+    plt.close()
 
 # m_enet
 plt.figure()
@@ -69,18 +87,18 @@ plt.close()
 
 # case 2: run enet_path to do the same thing
 
-alphas_enet, coefs_enet, _ = enet_path(A, B, max_iter=3000, tol=1e-6, 
-                                       alphas=np.logspace(-16,1,200),
-                                       l1_ratio=0.5, fit_intercept=False)
+alphas_enet, coefs_enet, _ = enet_path(A, B, max_iter=max_iter, tol=tol,
+                                       alphas=np.logspace(-16,1,num_alpha),
+                                       l1_ratio=l1_ratio, fit_intercept=False)
 
 plt.figure()
-plt.plot(np.log10(alpha_array), coefs_enet[0,:,:].T)
+plt.plot(-np.log10(alpha_array), coefs_enet[0,:,:].T)
 plt.xlabel('-log10(alpha)')
 plt.savefig('enet_path_coef_1.png')
 plt.close()
 
 plt.figure()
-plt.plot(np.log10(alpha_array), coefs_enet[1,:,:].T)
+plt.plot(-np.log10(alpha_array), coefs_enet[1,:,:].T)
 plt.xlabel('-log10(alpha)')
 plt.savefig('enet_path_coef_2.png')
 plt.close()
