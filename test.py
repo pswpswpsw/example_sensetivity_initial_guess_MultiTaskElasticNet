@@ -27,9 +27,11 @@ alpha_array = np.logspace(-16,1,num_alpha)
 alpha_array = alpha_array[::-1]
 coef_list_1 = []
 coef_list_2 = []
-coef_list_1_m = [] 
+coef_list_1_m = []
 coef_list_2_m = []
-coef_list_1_l = [] 
+coef_list_1_m_w = []
+coef_list_2_m_w = []
+coef_list_1_l = []
 coef_list_2_l = []
 
 
@@ -37,12 +39,14 @@ for index, alpha in enumerate(alpha_array):
 
     print alpha
 
-
     if not disable_single_enet:
         clf = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, tol=tol, max_iter=max_iter, fit_intercept=False)
         clf.fit(A, B)
         coef_list_1.append(clf.coef_[0])
         coef_list_2.append(clf.coef_[1])
+
+    clf_m_wrong = MultiTaskElasticNet(alpha=alpha, l1_ratio=l1_ratio, tol=tol, max_iter=max_iter, fit_intercept=False)
+    clf_m_wrong.fit(A, B)
 
     if index == 0:
         clf_m = MultiTaskElasticNet(alpha=alpha, l1_ratio=l1_ratio, tol=tol, max_iter=max_iter, fit_intercept=False)
@@ -52,20 +56,29 @@ for index, alpha in enumerate(alpha_array):
         clf_m.alpha = alpha
         clf_m.fit(A, B)
 
+    coef_copy_wrong = np.copy(clf_m_wrong.coef_)
     coef_copy = np.copy(clf_m.coef_)
 
     coef_list_1_m.append(coef_copy[0])
     coef_list_2_m.append(coef_copy[1])
+    coef_list_1_m_w.append(coef_copy_wrong[0])
+    coef_list_2_m_w.append(coef_copy_wrong[1])
+
+
 
 if not disable_single_enet:
     # enet
     plt.figure()
+    plt.ylabel('coef')
+    plt.title('ElasticNet with single target: first one')
     plt.plot(-np.log10(alpha_array), coef_list_1)
     plt.xlabel('-log10(alpha)')
     plt.savefig('single_run_enet_coef_1.png')
     plt.close()
 
     plt.figure()
+    plt.ylabel('coef')
+    plt.title('ElasticNet with single target: second one')
     plt.plot(-np.log10(alpha_array), coef_list_2)
     plt.xlabel('-log10(alpha)')
     plt.savefig('single_run_enet_coef_2.png')
@@ -73,16 +86,38 @@ if not disable_single_enet:
 
 # m_enet
 plt.figure()
+plt.ylabel('coef')
+plt.title('With Warm-up MultiTaskELasticNet: first one')
 plt.plot(-np.log10(alpha_array), coef_list_1_m)
 plt.xlabel('-log10(alpha)')
 plt.savefig('single_run_multi_enet_coef_1.png')
 plt.close()
 
 plt.figure()
+plt.title('With Warm-up MultiTaskElasticNet: second one')
+plt.ylabel('coef')
 plt.plot(-np.log10(alpha_array), coef_list_2_m)
 plt.xlabel('-log10(alpha)')
 plt.savefig('single_run_multi_enet_coef_2.png')
 plt.close()
+
+# m_enet: but wrongly setup, i.e., no warm-up
+plt.figure()
+plt.ylabel('coef')
+plt.title('Without Warm-up MultiTaskELasticNet: first one')
+plt.plot(-np.log10(alpha_array), coef_list_1_m_w)
+plt.xlabel('-log10(alpha)')
+plt.savefig('single_run_multi_enet_coef_1_now.png')
+plt.close()
+
+plt.figure()
+plt.title('Without Warm-up MultiTaskElasticNet: second one')
+plt.ylabel('coef')
+plt.plot(-np.log10(alpha_array), coef_list_2_m_w)
+plt.xlabel('-log10(alpha)')
+plt.savefig('single_run_multi_enet_coef_2_now.png')
+plt.close()
+
 
 
 # case 2: run enet_path to do the same thing
@@ -92,23 +127,21 @@ alphas_enet, coefs_enet, _ = enet_path(A, B, max_iter=max_iter, tol=tol,
                                        l1_ratio=l1_ratio, fit_intercept=False)
 
 plt.figure()
+plt.ylabel('coef')
+plt.title('Direct calling enet_path')
 plt.plot(-np.log10(alpha_array), coefs_enet[0,:,:].T)
 plt.xlabel('-log10(alpha)')
 plt.savefig('enet_path_coef_1.png')
 plt.close()
 
-plt.figure()
+plt.figure('Direct calling enet_path')
+plt.ylabel('coef')
 plt.plot(-np.log10(alpha_array), coefs_enet[1,:,:].T)
 plt.xlabel('-log10(alpha)')
 plt.savefig('enet_path_coef_2.png')
 plt.close()
 
 
-# Question: why there is possible for two solutions?
-
-# Answer: because A is not full rank. so the null space is not zero.
-#         but unfortunately, the sklearn.linear_models.ElasticNet didn't find the one with 
-#         smallest norm coefficient. BUT! enet_path can find!!!
 
 
 
