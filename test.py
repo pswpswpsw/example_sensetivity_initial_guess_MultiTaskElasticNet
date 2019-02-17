@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.linear_model import ElasticNet, enet_path, lasso_path, MultiTaskElasticNet, Lasso
-
+import sklearn
 
 # prepare data
 data = np.load('data.npz')
@@ -126,6 +126,16 @@ alphas_enet, coefs_enet, _ = enet_path(A, B, max_iter=max_iter, tol=tol,
                                        alphas=np.logspace(-16,1,num_alpha),
                                        l1_ratio=l1_ratio, fit_intercept=False)
 
+
+# compute residuals, MSE
+
+residual_list = []
+for i in xrange(num_alpha):
+    residual = sklearn.metrics.mean_squared_error(B, np.matmul(A, coefs_enet[:,:,i].T))
+    residual_list.append(residual)
+
+residual_array = np.array(residual_list)
+
 plt.figure()
 plt.ylabel('coef')
 plt.title('Direct calling enet_path')
@@ -140,6 +150,15 @@ plt.plot(-np.log10(alpha_array), coefs_enet[1,:,:].T)
 plt.xlabel('-log10(alpha)')
 plt.savefig('enet_path_coef_2.png')
 plt.close()
+
+plt.figure('Direct calling enet_path')
+plt.ylabel('MSE')
+plt.semilogy(-np.log10(alpha_array), residual_array)
+plt.xlabel('-log10(alpha)')
+plt.savefig('enet_path_residual.png')
+plt.close()
+
+
 
 
 
