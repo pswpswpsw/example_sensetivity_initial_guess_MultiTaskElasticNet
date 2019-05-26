@@ -24,4 +24,4 @@ To show this, type
 2. With a careful modification to force it to reuse previous final solution (and previous solution must come from a larger alpha), as noted by Alex Sun, one can improve the result from `MultiTaskElasticNet` to make it the same performance as `enet_path`. 
 
 ## Acknowledgment
-I thank Alex Sun for pointing out the issues in the source code that the difference lies in whether or not reusing previous solutions. I also thank Alexandre Gramfort for noticing the warm_start could be an issue.  
+I thank [Alex Sun](https://www.linkedin.com/in/weitao-sun/) for pointing out the issues in the source code that the difference lies in whether or not reusing previous solutions. I also thank [Alexandre Gramfort](http://alexandre.gramfort.net/) for noticing the warm_start could be an issue.  
