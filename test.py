@@ -8,12 +8,12 @@ data = np.load('data.npz')
 A = data['A']
 B = data['B']
 
-print A.shape
-print B.shape
+print(A.shape) # (1600,14)
+print(B.shape) # (1600,2)
 
 # note that data is centered so no need to fit the bias
-print A.mean(axis=0)
-print B.mean(axis=0)
+print(A.mean(axis=0))
+print(B.mean(axis=0))
 
 num_alpha = 100
 tol = 1e-8
@@ -37,7 +37,7 @@ coef_list_2_l = []
 
 for index, alpha in enumerate(alpha_array):
 
-    print alpha
+    print(alpha)
 
     if not disable_single_enet:
         clf = ElasticNet(alpha=alpha, l1_ratio=l1_ratio, tol=tol, max_iter=max_iter, fit_intercept=False)
@@ -130,7 +130,7 @@ alphas_enet, coefs_enet, _ = enet_path(A, B, max_iter=max_iter, tol=tol,
 # compute residuals, MSE
 
 residual_list = []
-for i in xrange(num_alpha):
+for i in range(num_alpha):
     residual = sklearn.metrics.mean_squared_error(B, np.matmul(A, coefs_enet[:,:,i].T))
     residual_list.append(residual)
 
