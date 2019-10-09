@@ -64,8 +64,11 @@ A_list = [A]
 B_list = [B]
 A_next = np.copy(A)
 B_next = np.copy(B)
-for i in range(50):
-    A_next = np.matmul(A_next, np.diag([0.03,0.99,0.1])) # updating the Koopman eigensignals
+total_time_step = 20 # long time
+# total_time_step = 3 # short time
+
+for i in range(total_time_step):
+    A_next = np.matmul(A_next, np.diag([0.1,0.9,0.1])) # updating the Koopman eigensignals
     B_next = np.matmul(A_next, KM)
     A_list.append(A_next)
     B_list.append(B_next)
@@ -146,19 +149,24 @@ B_rec_only_1 = np.matmul(A[:,1:2], KM[1:2,:])
 print('B_rec = ',B_rec_only_1 )
 
 plt.figure()
-plt.plot(B_rec_only_1,'k^-')
+plt.plot(B_rec_only_1,'go-')
 plt.plot(B,'b^--')
+plt.ylim([-5,2])
 plt.show()
 
 print('True KM = \n', KM)
-index = 29
+
+index = 2
+# index = 29 # for 50 timestep
 print('my algorithm find solution = \n', coefs_enet[:,:,index].T, '\n alpha = ', alphas_enet[index])
 
-B_rec_lasso = np.matmul(A[:,1:2], coefs_enet[:,:,index].T[1:2,:])
+B_rec_lasso = np.matmul(A[:,:], coefs_enet[:,:,index].T[:,:])
 plt.figure()
-plt.plot(B_rec_lasso,'r^-')
+plt.plot(B_rec_lasso,'ro-')
 plt.plot(B,'b^--')
+plt.ylim([-5,2])
 plt.show()
+
 
 
 # print('my algorithm find solution = \n', coefs_enet[:,:,4].T, ' alpha = ', alphas_enet[4])

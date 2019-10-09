@@ -2,27 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="823f1d06-ddd6-43a8-9662-8994f4d00123" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/enet_path_coef_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/enet_path_coef_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/enet_path_residual.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/single_run_multi_enet_coef_1_no_reuse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/single_run_multi_enet_coef_1_reuse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/single_run_multi_enet_coef_2_no_reuse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/single_run_multi_enet_coef_2_reuse.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sr3_coef_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sr3_coef_1_my_toy_problem.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sr3_coef_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sr3_l21.cpython-36m-x86_64-linux-gnu.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sr3_l21.f90" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sr3_version.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_lasso_failure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_lasso_failure_SR3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_zhang_hao_princeton.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/test_on_sklearn_elasticNet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/test_on_sklearn_elasticNet.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_zhang_hao_princeton.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_zhang_hao_princeton.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -217,6 +198,8 @@
       <updated>1548442157730</updated>
       <workItem from="1570144174739" duration="25001000" />
       <workItem from="1570643761032" duration="7341000" />
+      <workItem from="1570655325802" duration="643000" />
+      <workItem from="1570656081810" duration="925000" />
     </task>
     <servers />
   </component>
@@ -241,6 +224,6 @@
     <SUITE FILE_PATH="coverage/example_sensetivity_initial_guess_MultiTaskElasticNet$test.coverage" NAME="test Coverage Results" MODIFIED="1570146623109" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/example_sensetivity_initial_guess_MultiTaskElasticNet$test_lasso_failure.coverage" NAME="test_lasso_failure Coverage Results" MODIFIED="1570245151961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/example_sensetivity_initial_guess_MultiTaskElasticNet$test_lasso_failure_SR3.coverage" NAME="test_lasso_failure_SR3 Coverage Results" MODIFIED="1570245722475" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/example_sensetivity_initial_guess_MultiTaskElasticNet$test_zhang_hao_princeton.coverage" NAME="test_zhang_hao_princeton Coverage Results" MODIFIED="1570654819864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/example_sensetivity_initial_guess_MultiTaskElasticNet$test_zhang_hao_princeton.coverage" NAME="test_zhang_hao_princeton Coverage Results" MODIFIED="1570656829898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
